@@ -1,0 +1,23 @@
+---
+# download_file.yml - Downloads an artifact using platform-appropriate modules.
+- name: Download a file
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Fail if required variables are not set
+      fail:
+        msg: "You must provide DOWNLOAD_URL and DOWNLOAD_DEST."
+      when: DOWNLOAD_URL is not defined or DOWNLOAD_DEST is not defined
+
+    - name: Download file on Linux
+      get_url:
+        url: "{{ DOWNLOAD_URL }}"
+        dest: "{{ DOWNLOAD_DEST }}"
+        mode: "0644"
+      when: ansible_os_family != "Windows"
+
+    - name: Download file on Windows
+      win_get_url:
+        url: "{{ DOWNLOAD_URL }}"
+        dest: "{{ DOWNLOAD_DEST }}"
+      when: ansible_os_family == "Windows"

@@ -1,0 +1,4 @@
+---
+# Defaults variables.
+linux_demo_dir: "/tmp/devops_demo"
+windows_demo_dir: "C:\\devops_demo"

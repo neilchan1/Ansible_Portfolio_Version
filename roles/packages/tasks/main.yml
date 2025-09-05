@@ -1,0 +1,20 @@
+---
+# Package installation using generic modules.
+- name: Install base packages on Linux
+  ansible.builtin.package:
+    name: "{{ linux_packages }}"
+    state: present
+  when: ansible_os_family != "Windows"
+
+- name: Ensure Chocolatey is available (Windows)
+  ansible.windows.win_chocolatey:
+    name: chocolatey
+    state: present
+  when: ansible_os_family == "Windows"
+
+- name: Install base packages on Windows via Chocolatey
+  ansible.windows.win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ windows_choco_packages }}"
+  when: ansible_os_family == "Windows"

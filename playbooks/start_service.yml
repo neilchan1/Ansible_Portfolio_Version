@@ -1,0 +1,25 @@
+---
+# start_service.yml - Starts a service on Linux/Windows.
+# Jenkins sets SERVICE_NAME, but we safely default to group_vars/all.yml.
+- name: Start a service
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Fail if SERVICE_NAME is not set
+      fail:
+        msg: "You must provide SERVICE_NAME."
+      when: SERVICE_NAME is not defined
+
+    - name: Start service on Linux
+      service:
+        name: "{{ SERVICE_NAME }}"
+        state: started
+        enabled: true
+      when: ansible_os_family != "Windows"
+
+    - name: Start service on Windows
+      win_service:
+        name: "{{ SERVICE_NAME }}"
+        state: started
+        start_mode: auto
+      when: ansible_os_family == "Windows"

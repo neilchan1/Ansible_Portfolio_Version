@@ -1,0 +1,18 @@
+---
+# Lightweight security examples to avoid intrusive changes (for demo purposes).
+- name: Debian - Ensure UFW is installed
+  ansible.builtin.package:
+    name: ufw
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Debian - Ensure UFW default policy is deny incoming
+  community.general.ufw:
+    state: enabled
+    policy: deny
+  when: ansible_os_family == "Debian"
+
+- name: Windows - Ensure Windows Firewall is enabled
+  ansible.windows.win_firewall:
+    state: enabled
+  when: ansible_os_family == "Windows"

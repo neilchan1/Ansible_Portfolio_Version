@@ -1,0 +1,23 @@
+---
+# extract_file.yml - Extracts archives on Linux/Windows with sane defaults.
+- name: Extract an archive
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Fail if required variables are not set
+      fail:
+        msg: "You must provide ARCHIVE_PATH and EXTRACT_DEST."
+      when: ARCHIVE_PATH is not defined or EXTRACT_DEST is not defined
+
+    - name: Extract tarball on Linux
+      unarchive:
+        src: "{{ ARCHIVE_PATH }}"
+        dest: "{{ EXTRACT_DEST }}"
+        remote_src: yes
+      when: ansible_os_family != "Windows"
+
+    - name: Extract zip on Windows
+      win_unzip:
+        src: "{{ ARCHIVE_PATH }}"
+        dest: "{{ EXTRACT_DEST }}"
+      when: ansible_os_family == "Windows"

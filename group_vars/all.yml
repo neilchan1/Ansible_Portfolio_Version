@@ -1,0 +1,19 @@
+# Can set Global default for variables. Jenkins can override any of these by setting env vars.
+
+# Service to start/stop by default (Jenkins parameter: SERVICE_NAME)
+SERVICE_NAME: "nginx"
+
+# Default download URL and destination (Jenkins parameters: DOWNLOAD_URL, DOWNLOAD_DEST)
+DOWNLOAD_URL: "https://example.com/demo-artifact.tar.gz"
+DOWNLOAD_DEST: "/tmp/demo-artifact.tar.gz"
+#DOWNLOAD_DEST: "C:\\Temp\\demo-artifact.zip"
+
+# Default archive paths and extraction destinations (Jenkins parameters: ARCHIVE_PATH, EXTRACT_DEST)
+ARCHIVE_PATH: "/tmp/demo-artifact.tar.gz"
+#ARCHIVE_PATH: "C:\\Temp\\demo-artifact.zip"
+EXTRACT_DEST: "/opt/demoapp"
+#EXTRACT_DEST: "C:\\DemoApp"
+
+# Example users JSON (Jenkins parameter: USERS). In Jenkins, pass a JSON array string.
+# E.g. USERS='[{\"name\":\"jenkins\",\"groups\":\"devops\"}]'
+USERS: '[{\"name\":\"jenkins\",\"groups\":\"devops\"}]'

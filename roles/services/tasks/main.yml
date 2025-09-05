@@ -1,0 +1,34 @@
+---
+# Services role demonstrates handlers and platform-specific service management.
+- name: Ensure nginx is installed and started on Debian-family (demo)
+  ansible.builtin.package:
+    name: nginx
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Update nginx configuration
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: restart service # Notify logic to trigger restart service in handlers/main.yml
+
+- name: Update nginx config on Windows
+  win_template:
+    src: nginx.conf.j2
+    dest: C:\nginx\conf\nginx.conf
+  notify: restart service on Windows
+
+- name: Ensure nginx is enabled and running (Debian)
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+  when: ansible_os_family == "Debian"
+  notify: restart nginx
+
+- name: Ensure IIS (Web-Server) feature is present on Windows (demo)
+  ansible.windows.win_feature:
+    name: Web-Server
+    state: present
+    include_sub_features: true
+  when: ansible_os_family == "Windows"

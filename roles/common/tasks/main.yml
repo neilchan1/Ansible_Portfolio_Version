@@ -1,0 +1,18 @@
+---
+- name: Ensure demo directory exists (Linux)
+  ansible.builtin.file:
+    path: "{{ linux_demo_dir }}"
+    state: directory
+    mode: "0755"
+  when: ansible_os_family != "Windows"
+
+- name: Ensure demo directory exists (Windows)
+  ansible.windows.win_file:
+    path: "{{ windows_demo_dir }}"
+    state: directory
+  when: ansible_os_family == "Windows"
+
+- name: Normalize hostname (Linux)  # demo only
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname | lower }}"
+  when: ansible_os_family != "Windows"
