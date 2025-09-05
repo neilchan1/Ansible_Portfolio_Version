@@ -1,0 +1,5 @@
+# Production inventory placeholder (intentionally minimal).
+all:
+  children:
+    linux: {}
+    windows: {}

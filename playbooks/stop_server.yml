@@ -1,0 +1,15 @@
+---
+# stop_server.yml - Demonstrates platform-conditional shutdown.
+# In a real environment, you might restrict this to maintenance windows and require confirmations.
+- name: Stop server (Linux or Windows)
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Shutdown Linux immediately
+      ansible.builtin.command: /sbin/shutdown -h now
+      become: yes
+      when: ansible_os_family != "Windows"
+
+    - name: Shutdown Windows immediately
+      ansible.windows.win_command: shutdown /s /t 0
+      when: ansible_os_family == "Windows"

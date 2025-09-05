@@ -1,0 +1,16 @@
+# Example inventory for demonstration only — replace with your own.
+all:
+  children:
+    linux:
+      hosts:
+        linux1:
+          ansible_host: 10.0.0.11   # placeholder
+          ansible_user: ubuntu
+    windows:
+      hosts:
+        win1:
+          ansible_host: 10.0.0.21   # placeholder
+          ansible_user: Administrator
+          ansible_connection: winrm
+          ansible_winrm_transport: basic
+          ansible_winrm_server_cert_validation: ignore

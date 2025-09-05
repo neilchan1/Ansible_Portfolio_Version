@@ -1,0 +1,17 @@
+---
+# Handlers are triggered by `notify` in tasks (handlers only run if a task changes something). 
+# Example: restarting a service after configuration changes.
+
+- name: restart service
+  # SERVICE_NAME must be provided via Jenkins or extra-vars
+  service:
+    name: "{{ SERVICE_NAME }}"
+    state: restarted
+  when: ansible_os_family != "Windows"
+
+- name: restart service on Windows
+  # SERVICE_NAME must be provided via Jenkins or extra-vars
+  win_service:
+    name: "{{ SERVICE_NAME }}"
+    state: restarted
+  when: ansible_os_family == "Windows"

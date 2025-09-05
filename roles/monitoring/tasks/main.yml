@@ -1,0 +1,5 @@
+---
+# Placeholder monitoring role to show where telemetry agents would be installed.
+- name: Show where monitoring agent install would occur
+  ansible.builtin.debug:
+    msg: "Install Prometheus node_exporter or Windows counters here in a real environment."

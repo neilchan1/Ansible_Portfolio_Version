@@ -1,0 +1,6 @@
+---
+# The role is intentionally thin because manage_users.yml demonstrates the logic.
+# In a real repo you might move that logic here and call the role directly.
+- name: Debug users passed in (for reviewers)
+  ansible.builtin.debug:
+    var: users

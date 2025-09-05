@@ -1,0 +1,13 @@
+---
+# site.yml - Acts as the top-level playbook that runs everything needed to configure a system or environment.
+# Instead of running many separate playbooks individually, you run site.yml once to apply all roles/tasks in order.
+- name: Apply baseline configuration to all nodes
+  hosts: all
+  gather_facts: yes
+  roles:
+    - role: common       # cross-platform setup (directories, hostname)
+    - role: users        # manage users
+    - role: packages     # install packages
+    - role: services     # start/enable services
+    - role: security     # light security tasks
+    - role: monitoring   # placeholders for monitoring agents

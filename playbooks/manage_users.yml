@@ -1,0 +1,29 @@
+---
+# manage_users.yml - Reads a JSON array from Jenkins (USERS) and creates users.
+# Example for Jenkins parameter USERS:
+#   '[{"name":"jenkins","groups":"devops"},{"name":"analyst","groups":"wheel"}]'
+- name: Manage users
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Fail if USERS is not set
+      fail:
+        msg: "You must provide USERS as a JSON array."
+      when: USERS is not defined
+
+    - name: Create user accounts (Linux)
+      user:
+        name: "{{ item.name }}"
+        state: present
+        groups: "{{ item.groups | default(omit) }}"
+        shell: "{{ item.shell | default('/bin/bash') }}"
+      loop: "{{ USERS | from_json }}"
+      when: ansible_os_family != "Windows"
+
+    - name: Create user accounts (Windows)
+      win_user:
+        name: "{{ item.name }}"
+        password: "{{ item.password | default('P@ssw0rd!') }}"
+        state: present
+      loop: "{{ USERS | from_json }}"
+      when: ansible_os_family == "Windows"

@@ -1,0 +1,3 @@
+---
+# Defaults for user management. Jenkins overrides by passing USERS as JSON.
+users: []
